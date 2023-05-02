@@ -2,15 +2,33 @@ import styled from "styled-components";
 
 import logo from "./images/logo.svg";
 import heroDesktop from "./images/hero-desktop.jpg";
+import heroMobile from "./images/hero-mobile.jpg";
 import next from "./images/icon-arrow.svg";
 
+import useWindowsDimensions from "./utils/getWindowsDimenssions";
+import { useEffect } from "react";
+
 function App() {
+  const { width } = useWindowsDimensions();
+  useEffect(() => {
+    console.log(width);
+  }, [width]);
+
   return (
     <Container>
       <Right>
         <Header>
           <img src={logo} alt="logo" />
         </Header>
+        {width < 720 && (
+          <MobileHero>
+            <img
+              src={heroMobile}
+              style={{ margin: "3rem 0", width: "100%" }}
+              alt="hero"
+            />
+          </MobileHero>
+        )}
         <Main>
           <h1>
             <span>we're </span>comming soon
@@ -37,19 +55,73 @@ function App() {
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-image: linear-gradient(
+    to right bottom,
+    hsl(0, 0%, 100%),
+    hsl(0, 100%, 98%),
+    hsl(0, 0%, 100%)
+  );
+
+  @media (max-width: 700px) {
+    flex-direction: column-reverse;
+    padding: 1rem 0;
+  }
 `;
 
 const Right = styled.div`
-  padding: 7rem 15rem;
+  width: 50%;
+  padding: 5rem 15rem;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1100px) {
+    padding: 5rem 10rem;
+  }
+
+  @media (max-width: 1030px) {
+    padding: 5rem 8rem;
+  }
+
+  @media (max-width: 990px) {
+    padding: 5rem 6rem;
+  }
+
+  @media (max-width: 930px) {
+    padding: 5rem 4rem;
+  }
+
+  @media (max-width: 890px) {
+    padding: 5rem 2rem;
+  }
+
+  @media (max-width: 770px) {
+    padding: 5rem 1rem;
+  }
+
+  @media (max-width: 700px) {
+    padding: 1rem 1rem;
+    width: 100%;
+  }
+
+  @media (max-width: 550px) {
+    padding: 1rem 0rem;
+    width: 100%;
+  }
 `;
 
-const Header = styled.div``;
+const Header = styled.div`
+  @media (max-width: 550px) {
+    padding: 0 1rem;
+  }
+`;
 
 const Main = styled.main`
-  font-size: 3rem;
-  margin-top: 13rem;
+  font-size: 2.5rem;
+  margin-top: 8rem;
 
   h1 {
     text-transform: uppercase;
@@ -60,24 +132,49 @@ const Main = styled.main`
       color: ${(props) => props.theme.desaturatedRed};
       font-weight: 300;
     }
+
+    @media (max-width: 700px) {
+      letter-spacing: 1px;
+    }
   }
 
   p {
     margin-top: 2rem;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: ${(props) => props.theme.desaturatedRed};
     line-height: 1.7;
     font-weight: 400;
+
+    @media (max-width: 770px) {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 700px) {
+      font-size: 1.6rem;
+    }
   }
+
+  @media (max-width: 890px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 770px) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 700px) {
+    padding: 0 1rem;
+    margin-top: 0;
+  }
+`;
+
+const MobileHero = styled.div`
+  padding: 0;
 `;
 
 const InputContainer = styled.div`
   height: 5rem;
   display: flex;
-
-  // border-image: linear-gradient(135deg, hsl(0, 80%, 86%), hsl(0, 74%, 74%)) 20;
-  // border-width: 3px;
-  // border-style: solid;
   border: 1px solid hsl(0, 80%, 86%);
   border-radius: 35px;
   margin-top: 4rem;
@@ -94,6 +191,9 @@ const InputContainer = styled.div`
     &:focus {
       outline: none;
     }
+
+    @media (max-width: 700px) {
+    }
   }
 
   div {
@@ -105,22 +205,28 @@ const InputContainer = styled.div`
     align-items: center;
     cursor: pointer;
 
-    box-shadow: 0 7px 5px 6px rgba(248, 191, 191, 0.4);
+    box-shadow: 0 3px 3px 3px rgba(248, 191, 191, 0.4);
     transition: all 0.5s;
 
     &:hover {
       opacity: 0.8;
-      box-shadow: 0 7px 5px 6px rgba(248, 191, 191, 0.8);
+      box-shadow: 0 4px 4px 4px rgba(248, 191, 191, 0.8);
     }
   }
 `;
 
 const SideImage = styled.div`
-  width: 70vw;
-  height: 100vh;
+  width: 50%;
+  align-self: stretch;
+
   img {
-    height: 100%;
     width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+    display: none;
   }
 `;
 
